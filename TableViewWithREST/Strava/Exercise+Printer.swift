@@ -32,9 +32,9 @@ extension Exercise {
 
         if let hour = components.hour {
             if hour < 12 {
-                return " to work"
+                return "to work"
             } else {
-                return " to home"
+                return "to home"
             }
         }
 
