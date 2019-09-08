@@ -79,6 +79,38 @@ extension Exercise {
         return (String(format: "%.2f", float/1000))
     }
 
+    func getElevationGain(amount: Double) -> String {
+        return (String(format: "%.0f", amount))
+    }
+
+    func getAverageSpeed(amount metersPerSecond: Double) -> String {
+        return (String(format: "%.1f", metersPerSecond * 3.6))
+    }
+
+    func getClimbing(elevationGain gain: Double, distanceInMeters: Double) -> String {
+        return (String(format: "%.2f", gain/(distance/1000)))
+    }
+
+    func getWatts(watts: Double?) -> String {
+        guard let watts = watts else {
+            return ""
+        }
+        return (String(format: "%.0f", watts))
+    }
+
+    func getMaxWatts(watts: Int?) -> String {
+        guard let watts = watts else {
+            return ""
+        }
+        return ("\(watts)")
+    }
+
+    func getWattsPerSpeed(watts: Double?, speed metersPerSecond: Double) -> String {
+        guard let watts = watts else {
+            return ""
+        }
+        return (String(format: "%.2f", watts/(metersPerSecond * 3.6)))
+    }
 
     func printCommute() {
         let date = getDate(fromDateString: start_date)
@@ -88,12 +120,38 @@ extension Exercise {
         strings += getDate(date: date)
         strings += getMonth(date: date)
         strings += getLink(activity: id)
-        strings += getHours(time: elapsed_time)
-        strings += getMinutes(time: elapsed_time)
-        strings += getSeconds(time: elapsed_time)
-        strings += getTime(time: elapsed_time)
+        strings += getHours(time: moving_time)
+        strings += getMinutes(time: moving_time)
+        strings += getSeconds(time: moving_time)
+        strings += getTime(time: moving_time)
         strings += getDistance(distanceInMeters: distance)
+        strings += getElevationGain(amount: total_elevation_gain)
+        strings += getAverageSpeed(amount: average_speed)
+        strings += getClimbing(elevationGain: total_elevation_gain, distanceInMeters: distance)
+        strings += getWatts(watts: average_watts)
+        strings += getMaxWatts(watts: max_watts)
+        strings += getWattsPerSpeed(watts: average_watts, speed: average_speed)
+        print(strings)
+    }
 
+    func printColumns() {
+        var strings = [String]()
+        strings += "Bike\t"
+        strings += "Type"
+        strings += "Date"
+        strings += "Mon"
+        strings += "Link\t\t\t\t\t\t\t\t\t\t"
+        strings += "H"
+        strings += "M"
+        strings += "S"
+        strings += "Time"
+        strings += "Dist"
+        strings += "EleG"
+        strings += "AvgSpeed"
+        strings += "Clmbng"
+        strings += "Watts"
+        strings += "MWatts"
+        strings += "WattsPerSpeed"
         print(strings)
     }
 

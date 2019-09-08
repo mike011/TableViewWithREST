@@ -14,19 +14,9 @@ enum StravaRouter: URLRequestConvertible {
 
     case activities
 
-    case getAtPath(_ urlString: String)
-    case getMyStarred
-    case getPublic
-
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
             switch self {
-            case .getAtPath:
-                return .get
-            case .getMyStarred:
-                return .get
-            case .getPublic:
-                return .get
             case .activities:
                 return .get
             }
@@ -36,19 +26,6 @@ enum StravaRouter: URLRequestConvertible {
             switch self {
             case .activities:
                 let relativePath = "athlete/activities"
-                var url = URL(string: StravaRouter.baseURLString)!
-                url.appendPathComponent(relativePath)
-                return url
-            case let .getAtPath(urlString):
-                // already have the full URL, so just return it
-                return URL(string: urlString)!
-            case .getMyStarred:
-                let relativePath = "gists/starred"
-                var url = URL(string: StravaRouter.baseURLString)!
-                url.appendPathComponent(relativePath)
-                return url
-            case .getPublic:
-                let relativePath = "gists/public"
                 var url = URL(string: StravaRouter.baseURLString)!
                 url.appendPathComponent(relativePath)
                 return url

@@ -115,6 +115,28 @@
 			path = DarkSky;
 			sourceTree = "<group>";
 		};
+		4C18BA9E2324863D00436C29 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4C5DBFD42310115C0082BA48 /* BackendError.swift */,
+				4C5DBFD6231011FB0082BA48 /* Networking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		4C18BA9F2324864600436C29 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */,
+				4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */,
+				4C5DBFC0230FF4250082BA48 /* Main.storyboard */,
+				4C5DBFC5230FF4250082BA48 /* LaunchScreen.storyboard */,
+				4C5DBFDA231927E00082BA48 /* LoginViewController.swift */,
+				4C5DBFDC231928C60082BA48 /* LoginViewDelegate.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4C5DBFAE230FF4250082BA48 = {
 			isa = PBXGroup;
 			children = (
@@ -136,21 +158,15 @@
 		4C5DBFB9230FF4250082BA48 /* TableViewWithREST */ = {
 			isa = PBXGroup;
 			children = (
+				4C18BA9F2324864600436C29 /* UI */,
+				4C18BA9E2324863D00436C29 /* Networking */,
 				4C18BA97232481C900436C29 /* DarkSky */,
 				4C18BA96232481BF00436C29 /* Mashape */,
 				4C18BA95232481AE00436C29 /* Gist */,
 				4CC7892D2322689300FD0532 /* Strava */,
 				4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */,
-				4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */,
-				4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */,
-				4C5DBFC0230FF4250082BA48 /* Main.storyboard */,
 				4C5DBFC3230FF4250082BA48 /* Assets.xcassets */,
-				4C5DBFC5230FF4250082BA48 /* LaunchScreen.storyboard */,
 				4C5DBFC8230FF4250082BA48 /* Info.plist */,
-				4C5DBFD42310115C0082BA48 /* BackendError.swift */,
-				4C5DBFD6231011FB0082BA48 /* Networking.swift */,
-				4C5DBFDA231927E00082BA48 /* LoginViewController.swift */,
-				4C5DBFDC231928C60082BA48 /* LoginViewDelegate.swift */,
 			);
 			path = TableViewWithREST;
 			sourceTree = "<group>";

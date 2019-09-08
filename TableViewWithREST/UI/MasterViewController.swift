@@ -126,7 +126,8 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         StravaAPIManager.shared.getActivities { (result, error) in
             switch result {
             case let .success(exercises):
-                for exercise in exercises {
+                exercises.first?.printColumns()
+                for exercise in exercises.reversed() {
                     if exercise.commute {
                         exercise.printCommute()
                     }
