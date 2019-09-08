@@ -161,7 +161,7 @@ class GitHubAPIManager {
 
     func URLToStartOAuth2Login() -> URL? {
         let authPath: String = "https://github.com/login/oauth/authorize" +
-        "?client_id=\(GitHubAPI.clientID)&scope=gist&state=TEST_STATE"
+        "?client_id=\(GitHubOAuthKeys.clientID)&scope=gist&state=TEST_STATE"
         return URL(string: authPath)
     }
 
@@ -195,8 +195,8 @@ class GitHubAPIManager {
 
     func swapAuthCodeForToken(code: String) {
         let getTokenPath = "https://github.com/login/oauth/access_token"
-        let tokenParams = ["client_id": GitHubAPI.clientID,
-                           "client_secret": GitHubAPI.clientSecret,
+        let tokenParams = ["client_id": GitHubOAuthKeys.clientID,
+                           "client_secret": GitHubOAuthKeys.clientSecret,
                            "code": code]
         let jsonHeader = HTTPHeaders(["Accept": "application/json"])
         AF.request(

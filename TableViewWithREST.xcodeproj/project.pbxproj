@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C18BA992324854D00436C29 /* GitHubOAuthKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BA982324854D00436C29 /* GitHubOAuthKeys.swift */; };
+		4C18BA9B2324858300436C29 /* MashapeAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BA9A2324858300436C29 /* MashapeAPIKeys.swift */; };
+		4C18BA9D232485A000436C29 /* DarkSkyAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BA9C232485A000436C29 /* DarkSkyAPIKeys.swift */; };
 		4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */; };
 		4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */; };
 		4C5DBFBF230FF4250082BA48 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */; };
@@ -36,6 +39,9 @@
 
 /* Begin PBXFileReference section */
 		3A5C9E5DEDC7EA05AB51C976 /* Pods-TableViewWithREST.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewWithREST.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST.debug.xcconfig"; sourceTree = "<group>"; };
+		4C18BA982324854D00436C29 /* GitHubOAuthKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubOAuthKeys.swift; path = OAuthKeys/GitHubOAuthKeys.swift; sourceTree = SOURCE_ROOT; };
+		4C18BA9A2324858300436C29 /* MashapeAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MashapeAPIKeys.swift; path = OAuthKeys/MashapeAPIKeys.swift; sourceTree = SOURCE_ROOT; };
+		4C18BA9C232485A000436C29 /* DarkSkyAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DarkSkyAPIKeys.swift; path = OAuthKeys/DarkSkyAPIKeys.swift; sourceTree = SOURCE_ROOT; };
 		4C5DBFB7230FF4250082BA48 /* TableViewWithREST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableViewWithREST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		4C18BA95232481AE00436C29 /* Gist */ = {
 			isa = PBXGroup;
 			children = (
+				4C18BA982324854D00436C29 /* GitHubOAuthKeys.swift */,
 				4C5DBFCE230FF4870082BA48 /* GitHubAPIManager.swift */,
 				4C5DBFD0230FF5100082BA48 /* GistRouter.swift */,
 				4C5DBFD223100B140082BA48 /* Gist.swift */,
@@ -92,6 +99,7 @@
 		4C18BA96232481BF00436C29 /* Mashape */ = {
 			isa = PBXGroup;
 			children = (
+				4C18BA9A2324858300436C29 /* MashapeAPIKeys.swift */,
 				4C5DBFD82317E0C30082BA48 /* MashapeRouter.swift */,
 			);
 			path = Mashape;
@@ -100,6 +108,7 @@
 		4C18BA97232481C900436C29 /* DarkSky */ = {
 			isa = PBXGroup;
 			children = (
+				4C18BA9C232485A000436C29 /* DarkSkyAPIKeys.swift */,
 				4CC86630231DF4F500BCD2D0 /* DarkSkyAPIManager.swift */,
 				4CC8662E231DF45200BCD2D0 /* DarkSkyRouter.swift */,
 			);
@@ -318,11 +327,14 @@
 				4C5DBFD52310115C0082BA48 /* BackendError.swift in Sources */,
 				4C5DBFDD231928C60082BA48 /* LoginViewDelegate.swift in Sources */,
 				4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */,
+				4C18BA9D232485A000436C29 /* DarkSkyAPIKeys.swift in Sources */,
 				4CC78933232268A500FD0532 /* Exercise.swift in Sources */,
 				4CC8662D231DF25A00BCD2D0 /* StravaRouter.swift in Sources */,
+				4C18BA992324854D00436C29 /* GitHubOAuthKeys.swift in Sources */,
 				4C5DBFD1230FF5100082BA48 /* GistRouter.swift in Sources */,
 				4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */,
 				4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */,
+				4C18BA9B2324858300436C29 /* MashapeAPIKeys.swift in Sources */,
 				4CC8662C231DF25A00BCD2D0 /* StravaAPIManager.swift in Sources */,
 				4CC7893B23247E8000FD0532 /* StravaOAuthKeys.swift in Sources */,
 				4CC78931232268A500FD0532 /* Athlete.swift in Sources */,

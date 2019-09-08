@@ -11,7 +11,7 @@ import Foundation
 
 enum DarkSkyRouter: URLRequestConvertible {
     private static let baseURLString = "https://api.darksky.net/"
-    private static let apiKey = DarkSkyKeys.api
+    private static let apiKey = DarkSkyAPIKeys.api
 
     case forecast(location: String)
 
