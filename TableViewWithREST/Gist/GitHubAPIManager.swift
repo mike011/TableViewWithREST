@@ -38,56 +38,6 @@ class GitHubAPIManager {
         }
     }
 
-    // MARK: - Basic Auth
-    func printMyStarredGistsWithBasicAuth() {
-        AF.request(GistRouter.getMyStarred)
-            .responseString { response in
-            guard let receivedString = try? response.result.get() else {
-                print("didn't get a string in the response")
-                return
-            }
-            print(receivedString)
-        }
-    }
-
-    func printPublicGists() {
-        AF.request(GistRouter.getPublic).responseString { (response) in
-            if let receievedString = response.value {
-                print(receievedString)
-            }
-        }
-    }
-
-    func fetchMyStarredGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
-        if let urlString = pageToLoad {
-            fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
-        } else {
-            fetchGists(GistRouter.getMyStarred, completionHandler: completionHandler)
-        }
-    }
-
-    func fetchPublicGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
-        if let urlString = pageToLoad {
-            self.fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
-        } else {
-            self.fetchGists(GistRouter.getPublic, completionHandler: completionHandler)
-        }
-    }
-
-    func fetchGists(_ urlRequest: URLRequestConvertible, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
-        AF.request(urlRequest).responseData { (response) in
-            if let urlResponse = response.response,
-                let authError = self.checkUnauthorized(urlResponse: urlResponse) {
-                completionHandler(.failure(authError), nil)
-                return
-            }
-            let decoder = JSONDecoder()
-            let result: Result<[Gist], Error> = decoder.decodeResponse(from: response)
-            let next = self.parseNextPageFromHeaders(response: response.response)
-            completionHandler(result, next)
-        }
-    }
-
     func imageFrom(url: URL, completionHandler: @escaping (UIImage?, Error?) -> Void) {
         AF.request(url).responseData { response in
             guard let data = response.data else {
@@ -99,7 +49,7 @@ class GitHubAPIManager {
         }
     }
 
-    private func parseNextPageFromHeaders(response: HTTPURLResponse?) -> String? {
+    func parseNextPageFromHeaders(response: HTTPURLResponse?) -> String? {
         guard let linkHeader = response?.allHeaderFields["Link"] as? String else {
             return nil }
         // looks like: <https://...?page=2>; rel="next", <https://...?page=6>; rel="last"
@@ -161,7 +111,7 @@ class GitHubAPIManager {
 
     func URLToStartOAuth2Login() -> URL? {
         let authPath: String = "https://github.com/login/oauth/authorize" +
-        "?client_id=\(GitHubOAuthKeys.clientID)&scope=gist&state=TEST_STATE"
+        "?client_id=\(GitHubOAuthKeys.clientID)&scope=repo&state=TEST_STATE"
         return URL(string: authPath)
     }
 

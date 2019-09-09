@@ -57,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return false
     }
 
+    // MARK: - Web
+
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         if let mainVC = self.window?.rootViewController as? MasterViewController,
             let webVC = mainVC.safariViewController {

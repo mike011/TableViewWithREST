@@ -53,6 +53,9 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
        // StravaAPIManager.shared.getAuthenticatedAthlete()
         //DarkSkyAPIManager.shared.getForecast(location: "51.50998,-0.1337")
         //GitHubAPIManager.shared.printMashapeRouterRequest()
+        if (GitHubAPIManager.shared.hasOAuthToken()) {
+            GitHubAPIManager.shared.mergePullRequest()
+        }
         // END TEST
 
         self.dateFormatter.dateStyle = .short
@@ -303,7 +306,7 @@ extension MasterViewController: LoginViewDelegate {
                 GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
                 return
             }
-            // Show web page to start oauth
+            // Show web page to start OAuth
             self.safariViewController = SFSafariViewController(url: authURL)
             self.safariViewController?.delegate = self
             guard let webViewController = self.safariViewController else {
