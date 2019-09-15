@@ -118,11 +118,28 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" id="Zdf-7t-Un8">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="6g7-Gt-h4Y">
+                            <rect key="frame" x="105.5" y="7.5" width="203" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Public"/>
+                                <segment title="Starred"/>
+                                <segment title="My Gists"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControlValueChangedWithSender:" destination="7bK-jq-Zjz" eventType="valueChanged" id="rwg-v7-4r6"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gistSegmentedControl" destination="6g7-Gt-h4Y" id="yHy-Ob-onf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="-630"/>
+            <point key="canvasLocation" x="851" y="-630"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="nC4-nZ-Zqu">

@@ -12,6 +12,9 @@ import UIKit
 
 class MasterViewController: UITableViewController, SFSafariViewControllerDelegate {
 
+    // MARK: - Outlets
+    @IBOutlet var gistSegmentedControl: UISegmentedControl!
+
     // MARK: - App
     var detailViewController: DetailViewController?
     var safariViewController: SFSafariViewController?
@@ -50,12 +53,13 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
 
         // TEST
         //GitHubAPIManager.shared.printMyStarredGistsWithBasicAuth()
-       // StravaAPIManager.shared.getAuthenticatedAthlete()
         //DarkSkyAPIManager.shared.getForecast(location: "51.50998,-0.1337")
         //GitHubAPIManager.shared.printMashapeRouterRequest()
-        if (GitHubAPIManager.shared.hasOAuthToken()) {
-            GitHubAPIManager.shared.mergePullRequest()
-        }
+//        if (GitHubAPIManager.shared.hasOAuthToken()) {
+//            GitHubAPIManager.shared.mergePullRequest()
+//        }
+       // CircleCIAPIManager.shared.printProjects()
+//        CircleCIAPIManager.shared.printSingleJob()
         // END TEST
 
         self.dateFormatter.dateStyle = .short
@@ -117,7 +121,6 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         self.present(loginVC, animated: true, completion: nil)
     }
 
-
     @objc func refresh(sender: Any) {
         GitHubAPIManager.shared.isLoadingOAuthToken = false
         nextPageURLString = nil // so it doesn't try to append the results
@@ -144,7 +147,31 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
 
     func loadGists(urlToLoad: String?) {
         self.isLoading = true
-        GitHubAPIManager.shared.fetchMyStarredGists(pageToLoad: urlToLoad) { (result, nextPage) in
+
+        switch gistSegmentedControl.selectedSegmentIndex {
+        case 0:
+            GitHubAPIManager.shared.fetchPublicGists(
+                pageToLoad: urlToLoad,
+                completionHandler: getCompletionHandler(urlToLoad: urlToLoad)
+            )
+        case 1:
+            GitHubAPIManager.shared.fetchMyStarredGists(
+                pageToLoad: urlToLoad,
+                completionHandler: getCompletionHandler(urlToLoad: urlToLoad)
+            )
+        case 2:
+            GitHubAPIManager.shared.fetchMyGists(
+                pageToLoad: urlToLoad,
+                completionHandler: getCompletionHandler(urlToLoad: urlToLoad)
+            )
+        default:
+            print("got an index that I didn't expect for selectedSegmentIndex")
+        }
+    }
+
+    func getCompletionHandler(urlToLoad: String?) -> (Result<[Gist], Error>, String?) -> Void {
+        let completionHandler: (Result<[Gist], Error>, String?) -> Void = {
+            (result, nextPage) in
             self.isLoading = false
             self.nextPageURLString = nextPage
 
@@ -153,7 +180,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                 refreshControl.isRefreshing {
                 refreshControl.endRefreshing()
             }
-            
+
             // update "last updated" title for refresh control
             let now = Date()
             let updateString = "Last Updated at " + self.dateFormatter.string(from: now)
@@ -171,6 +198,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             }
             self.tableView.reloadData()
         }
+        return completionHandler
     }
 
     func handleLoadGistsError(_ error: Error) {
@@ -340,3 +368,13 @@ extension MasterViewController {
     }
 }
 
+// MARK: - Actions
+
+extension MasterViewController {
+
+    @IBAction func segmentedControlValueChanged(sender: UISegmentedControl) {
+        gists = []
+        tableView.reloadData()
+        loadGists(urlToLoad: nil)
+    }
+}

@@ -31,6 +31,14 @@ extension GitHubAPIManager {
         }
     }
 
+    func fetchMyGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
+        if let urlString = pageToLoad {
+            fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
+        } else {
+            fetchGists(GistRouter.getMyGists, completionHandler: completionHandler)
+        }
+    }
+
     func fetchMyStarredGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
         if let urlString = pageToLoad {
             fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)

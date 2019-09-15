@@ -13,7 +13,7 @@ extension GitHubAPIManager {
 
     // MARK: - Basic Auth
     func printPullRequests() {
-        AF.request(PullRouter.pulls(owner: "Enflick", repo: "textnow-ios5"))
+        AF.request(PullRouter.pulls(owner: "mike011", repo: "TapMe"))
             .responseJSON { response in
                 switch response.result {
                 case .success(let data):

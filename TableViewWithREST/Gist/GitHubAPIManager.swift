@@ -111,7 +111,7 @@ class GitHubAPIManager {
 
     func URLToStartOAuth2Login() -> URL? {
         let authPath: String = "https://github.com/login/oauth/authorize" +
-        "?client_id=\(GitHubOAuthKeys.clientID)&scope=repo&state=TEST_STATE"
+        "?client_id=\(GitHubOAuthKeys.clientID)&scope=repo,gist&state=TEST_STATE"
         return URL(string: authPath)
     }
 

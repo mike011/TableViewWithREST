@@ -13,6 +13,10 @@
 		4C18BAA123257B9300436C29 /* PullRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAA023257B9300436C29 /* PullRouter.swift */; };
 		4C18BAA323257C9100436C29 /* GitHubAPIManager+Gist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAA223257C9100436C29 /* GitHubAPIManager+Gist.swift */; };
 		4C18BAA523257CD100436C29 /* GitHubAPIManager+Pull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAA423257CD100436C29 /* GitHubAPIManager+Pull.swift */; };
+		4C18BAAA23271B7100436C29 /* CircleCIAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAA923271B7100436C29 /* CircleCIAPIManager.swift */; };
+		4C18BAAC23271B8200436C29 /* CircleCIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAB23271B8200436C29 /* CircleCIRouter.swift */; };
+		4C18BAAE23271C4E00436C29 /* CircleCIAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */; };
+		4C18BAB0232AD8AD00436C29 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAF232AD8AD00436C29 /* Project.swift */; };
 		4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */; };
 		4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */; };
 		4C5DBFBF230FF4250082BA48 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */; };
@@ -48,6 +52,10 @@
 		4C18BAA023257B9300436C29 /* PullRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRouter.swift; sourceTree = "<group>"; };
 		4C18BAA223257C9100436C29 /* GitHubAPIManager+Gist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubAPIManager+Gist.swift"; sourceTree = "<group>"; };
 		4C18BAA423257CD100436C29 /* GitHubAPIManager+Pull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubAPIManager+Pull.swift"; sourceTree = "<group>"; };
+		4C18BAA923271B7100436C29 /* CircleCIAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCIAPIManager.swift; sourceTree = "<group>"; };
+		4C18BAAB23271B8200436C29 /* CircleCIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCIRouter.swift; sourceTree = "<group>"; };
+		4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleCIAPIKeys.swift; path = OAuthKeys/CircleCIAPIKeys.swift; sourceTree = SOURCE_ROOT; };
+		4C18BAAF232AD8AD00436C29 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		4C5DBFB7230FF4250082BA48 /* TableViewWithREST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableViewWithREST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +154,17 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		4C18BAA823271B4700436C29 /* CircleCI */ = {
+			isa = PBXGroup;
+			children = (
+				4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */,
+				4C18BAA923271B7100436C29 /* CircleCIAPIManager.swift */,
+				4C18BAAB23271B8200436C29 /* CircleCIRouter.swift */,
+				4C18BAAF232AD8AD00436C29 /* Project.swift */,
+			);
+			path = CircleCI;
+			sourceTree = "<group>";
+		};
 		4C5DBFAE230FF4250082BA48 = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +192,7 @@
 				4C18BA96232481BF00436C29 /* Mashape */,
 				4C18BA95232481AE00436C29 /* Gist */,
 				4CC7892D2322689300FD0532 /* Strava */,
+				4C18BAA823271B4700436C29 /* CircleCI */,
 				4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */,
 				4C5DBFC3230FF4250082BA48 /* Assets.xcassets */,
 				4C5DBFC8230FF4250082BA48 /* Info.plist */,
@@ -340,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C18BAAE23271C4E00436C29 /* CircleCIAPIKeys.swift in Sources */,
 				4C5DBFBF230FF4250082BA48 /* DetailViewController.swift in Sources */,
 				4C5DBFCF230FF4870082BA48 /* GitHubAPIManager.swift in Sources */,
 				4C5DBFD323100B140082BA48 /* Gist.swift in Sources */,
@@ -354,12 +375,15 @@
 				4C5DBFDD231928C60082BA48 /* LoginViewDelegate.swift in Sources */,
 				4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */,
 				4C18BA9D232485A000436C29 /* DarkSkyAPIKeys.swift in Sources */,
+				4C18BAAC23271B8200436C29 /* CircleCIRouter.swift in Sources */,
+				4C18BAAA23271B7100436C29 /* CircleCIAPIManager.swift in Sources */,
 				4CC78933232268A500FD0532 /* Exercise.swift in Sources */,
 				4CC8662D231DF25A00BCD2D0 /* StravaRouter.swift in Sources */,
 				4C18BA992324854D00436C29 /* GitHubOAuthKeys.swift in Sources */,
 				4C5DBFD1230FF5100082BA48 /* GistRouter.swift in Sources */,
 				4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */,
 				4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */,
+				4C18BAB0232AD8AD00436C29 /* Project.swift in Sources */,
 				4C18BA9B2324858300436C29 /* MashapeAPIKeys.swift in Sources */,
 				4CC8662C231DF25A00BCD2D0 /* StravaAPIManager.swift in Sources */,
 				4C18BAA523257CD100436C29 /* GitHubAPIManager+Pull.swift in Sources */,
