@@ -63,6 +63,7 @@ extension GitHubAPIManager {
                 return
             }
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             let result: Result<[Gist], Error> = decoder.decodeResponse(from: response)
             let next = self.parseNextPageFromHeaders(response: response.response)
             completionHandler(result, next)

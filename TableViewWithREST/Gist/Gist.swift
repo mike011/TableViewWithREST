@@ -18,17 +18,41 @@ struct GistOwner: Codable {
     }
 }
 
+struct File: Codable {
+    var filename: String
+    var url: URL
+
+    enum CodingKeys: String, CodingKey {
+        case filename
+        case url = "raw_url"
+    }
+}
+
 struct Gist: Codable {
+    
     var id: String
     var gistDescription: String?
     var url: URL
     var owner: GistOwner?
+    let createdAt: Date
+    let updatedAt: Date
+    let files: [String: File] // JSON does filename: { file data }
+    lazy var orderedFiles: [(name: String, details: File)] = {
+        var orderedFiles = [(name: String, details: File)]()
+        for (key, value) in files {
+            let item = (name: key, details: value)
+            orderedFiles.append(item)
+        }
+        return orderedFiles
+    }()
 
     enum CodingKeys: String, CodingKey {
         case id
         case gistDescription = "description"
         case url
         case owner
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case files
     }
-
 }
