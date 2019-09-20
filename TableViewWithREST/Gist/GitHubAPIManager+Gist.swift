@@ -69,4 +69,66 @@ extension GitHubAPIManager {
             completionHandler(result, next)
         }
     }
+
+    func isGistStarred(withID gistID: String, completionHandler: @escaping (Result<Bool,Error>) -> Void) {
+        AF.request(GistRouter.isStarred(id: gistID))
+            .validate(statusCode: [204]).responseData { (response) in
+                if let urlResponse = response.response,
+                    let authError = self.checkUnauthorized(urlResponse: urlResponse)
+                {
+                    completionHandler(.failure(authError))
+                    return
+                }
+
+                switch response.result {
+                case let .failure(error):
+                    switch response.response?.statusCode {
+                    case 404:
+                        completionHandler(.success(false))
+                    default:
+                        completionHandler(.failure(error))
+                    }
+                    return
+                case .success:
+                    completionHandler(.success(true))
+                    return
+            }
+        }
+    }
+
+    func starGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+        AF.request(GistRouter.star(id: gistID)).responseData { (response) in
+            if let urlResponse = response.response,
+                let authError = self.checkUnauthorized(urlResponse: urlResponse)
+            {
+                completionHandler(.failure(authError))
+                return
+            }
+
+            switch(response.result) {
+            case let .failure(error):
+                completionHandler(.failure(error))
+            case .success:
+                completionHandler(.success(nil))
+            }
+        }
+    }
+
+    func unstarGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+        AF.request(GistRouter.unstar(id: gistID)).responseData { (response) in
+            if let urlResponse = response.response,
+                let authError = self.checkUnauthorized(urlResponse: urlResponse)
+            {
+                completionHandler(.failure(authError))
+                return
+            }
+            
+            switch(response.result) {
+            case let .failure(error):
+                completionHandler(.failure(error))
+            case .success:
+                completionHandler(.success(nil))
+            }
+        }
+    }
 }

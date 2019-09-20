@@ -16,6 +16,9 @@ enum GistRouter: URLRequestConvertible {
     case getMyGists
     case getMyStarred
     case getPublic
+    case isStarred(id: String)
+    case star(id: String)
+    case unstar(id: String)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -28,6 +31,12 @@ enum GistRouter: URLRequestConvertible {
                 return .get
             case .getPublic:
                 return .get
+            case .isStarred:
+                return .get
+            case .star:
+                return .put
+            case .unstar:
+                return .delete
             }
         }
 
@@ -37,20 +46,17 @@ enum GistRouter: URLRequestConvertible {
                 // already have the full URL, so just return it
                 return URL(string: urlString)!
             case .getMyGists:
-                let relativePath = "gists"
-                var url = URL(string: GistRouter.baseURLString)!
-                url.appendPathComponent(relativePath)
-                return url
+                return createURL(withPath: "gists")
             case .getMyStarred:
-                let relativePath = "gists/starred"
-                var url = URL(string: GistRouter.baseURLString)!
-                url.appendPathComponent(relativePath)
-                return url
+                return createURL(withPath: "gists/starred")
             case .getPublic:
-                let relativePath = "gists/public"
-                var url = URL(string: GistRouter.baseURLString)!
-                url.appendPathComponent(relativePath)
-                return url
+                return createURL(withPath: "gists/public")
+            case let .isStarred(id):
+                return createURL(withPath: "gists/\(id)/star")
+            case let .star(id):
+                return createURL(withPath: "gists/\(id)/star")
+            case let .unstar(id):
+                return createURL(withPath: "gists/\(id)/star")
             }
         }()
 
@@ -63,6 +69,12 @@ enum GistRouter: URLRequestConvertible {
         }
 
         return urlRequest
+    }
+
+    func createURL(withPath path: String) -> URL {
+        var url = URL(string: GistRouter.baseURLString)!
+        url.appendPathComponent(path)
+        return url
     }
 }
 
