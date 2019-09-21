@@ -131,4 +131,22 @@ extension GitHubAPIManager {
             }
         }
     }
+
+    func deleteGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+        AF.request(GistRouter.delete(id: gistID)).responseData { (response) in
+            if let urlResponse = response.response,
+                let authError = self.checkUnauthorized(urlResponse: urlResponse)
+            {
+                completionHandler(.failure(authError))
+                return
+            }
+
+            switch(response.result) {
+            case let .failure(error):
+                completionHandler(.failure(error))
+            case .success:
+                completionHandler(.success(nil))
+            }
+        }
+    }
 }
