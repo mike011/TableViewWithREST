@@ -195,10 +195,11 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         case (0, 2, .some(false)):
             starThisGist()
         case (1, _, _):
-            guard let file = gist?.orderedFiles[indexPath.row] else {
+            guard let file = gist?.orderedFiles[indexPath.row],
+                let url = file.details.url else {
                 return
             }
-            let url = file.details.url
+
             let safariViewController = SFSafariViewController(url: url)
             safariViewController.title = file.name
             self.navigationController?.pushViewController(safariViewController, animated: true)

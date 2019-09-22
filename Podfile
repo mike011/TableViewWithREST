@@ -9,5 +9,6 @@ target 'TableViewWithREST' do
   pod 'Alamofire', '~> 5.0.0-beta.7'
   pod 'PINRemoteImage', '2.1'
   pod 'Locksmith', '4.0'
+  pod 'XLForm', '4.0'
 
 end

@@ -145,8 +145,44 @@ extension GitHubAPIManager {
             case let .failure(error):
                 completionHandler(.failure(error))
             case .success:
+                self.clearCache()
                 completionHandler(.success(nil))
             }
+        }
+    }
+
+    func creaateGist(gist: Gist, completionHandler: @escaping (Result<Any?, Error>) -> Void ) {
+
+        guard let _ = gist.gistDescription else {
+            let error = BackendError.missingRequiredInput(reason: "No Description provided")
+            completionHandler(.failure(error))
+            return
+        }
+
+        for file in gist.files {
+            guard let _ = file.value.content else {
+                let error = BackendError.missingRequiredInput(reason: "\(file) has no content")
+                completionHandler(.failure(error))
+                return
+            }
+        }
+
+        let encoder = JSONEncoder()
+        do {
+            let jsonAsData = try encoder.encode(gist)
+            AF.request(GistRouter.create(jsonAsData)).responseData { (response) in
+                switch response.result {
+                case .success:
+                    self.clearCache()
+                    completionHandler(.success(true))
+                case let .failure(error):
+                    print(error)
+                    completionHandler(.failure(error))
+                }
+            }
+        } catch {
+            print(error)
+            completionHandler(.failure(error))
         }
     }
 }

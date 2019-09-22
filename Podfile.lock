@@ -10,11 +10,13 @@ PODS:
   - PINRemoteImage/FLAnimatedImage (2.1):
     - FLAnimatedImage (>= 1.0)
     - PINRemoteImage/Core
+  - XLForm (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-beta.7)
   - Locksmith (= 4.0)
   - PINRemoteImage (= 2.1)
+  - XLForm (= 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -23,6 +25,7 @@ SPEC REPOS:
     - Locksmith
     - PINCache
     - PINRemoteImage
+    - XLForm
 
 SPEC CHECKSUMS:
   Alamofire: bd07938ceecad59d2492aeecb1f785a8f2721160
@@ -30,7 +33,8 @@ SPEC CHECKSUMS:
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
   PINRemoteImage: e8367ac3f5c234712f1d8c274462ec834d649940
+  XLForm: 04110197c12187dd28a6c7295d3d8b95f4fdb4de
 
-PODFILE CHECKSUM: 7ebe6c8519bd634e495569634d2478c5045fef7e
+PODFILE CHECKSUM: a5058ac87409298960066e0aeda118bcf14b0213
 
 COCOAPODS: 1.5.3

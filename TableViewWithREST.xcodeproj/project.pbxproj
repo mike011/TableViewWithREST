@@ -17,6 +17,7 @@
 		4C18BAAC23271B8200436C29 /* CircleCIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAB23271B8200436C29 /* CircleCIRouter.swift */; };
 		4C18BAAE23271C4E00436C29 /* CircleCIAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */; };
 		4C18BAB0232AD8AD00436C29 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAF232AD8AD00436C29 /* Project.swift */; };
+		4C18BAB223364B5900436C29 /* CreateGistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAB123364B5900436C29 /* CreateGistViewController.swift */; };
 		4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */; };
 		4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */; };
 		4C5DBFBF230FF4250082BA48 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */; };
@@ -56,6 +57,7 @@
 		4C18BAAB23271B8200436C29 /* CircleCIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCIRouter.swift; sourceTree = "<group>"; };
 		4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleCIAPIKeys.swift; path = OAuthKeys/CircleCIAPIKeys.swift; sourceTree = SOURCE_ROOT; };
 		4C18BAAF232AD8AD00436C29 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		4C18BAB123364B5900436C29 /* CreateGistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGistViewController.swift; sourceTree = "<group>"; };
 		4C5DBFB7230FF4250082BA48 /* TableViewWithREST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableViewWithREST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */,
 				4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */,
+				4C18BAB123364B5900436C29 /* CreateGistViewController.swift */,
 				4C5DBFC0230FF4250082BA48 /* Main.storyboard */,
 				4C5DBFC5230FF4250082BA48 /* LaunchScreen.storyboard */,
 				4C5DBFDA231927E00082BA48 /* LoginViewController.swift */,
@@ -337,6 +340,7 @@
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/XLForm/XLForm.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -347,6 +351,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLForm.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -384,6 +389,7 @@
 				4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */,
 				4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */,
 				4C18BAB0232AD8AD00436C29 /* Project.swift in Sources */,
+				4C18BAB223364B5900436C29 /* CreateGistViewController.swift in Sources */,
 				4C18BA9B2324858300436C29 /* MashapeAPIKeys.swift in Sources */,
 				4CC8662C231DF25A00BCD2D0 /* StravaAPIManager.swift in Sources */,
 				4C18BAA523257CD100436C29 /* GitHubAPIManager+Pull.swift in Sources */,

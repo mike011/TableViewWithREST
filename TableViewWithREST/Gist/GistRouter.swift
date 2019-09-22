@@ -12,6 +12,7 @@ import Foundation
 enum GistRouter: URLRequestConvertible {
     static let baseURLString = "https://api.github.com/"
 
+    case create(Data)
     case delete(id: String)
     case getAtPath(_ urlString: String)
     case getMyGists
@@ -24,6 +25,8 @@ enum GistRouter: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
             switch self {
+            case .create:
+                return .post
             case .delete:
                 return .delete
             case .getAtPath:
@@ -45,6 +48,8 @@ enum GistRouter: URLRequestConvertible {
 
         let url: URL = {
             switch self {
+            case let .create:
+                return createURL(withPath: "gists")
             case let .delete(id):
                 return createURL(withPath: "gists/\(id)")
             case let .getAtPath(urlString):
@@ -65,8 +70,18 @@ enum GistRouter: URLRequestConvertible {
             }
         }()
 
+        let data: Data? = {
+            switch self {
+            case let .create(data):
+                return data
+            default:
+                return nil
+            }
+        }()
+
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
+        urlRequest.httpBody = data
 
         // Set OAuth token if we have one
         if let token = GitHubAPIManager.shared.OAuthToken {
