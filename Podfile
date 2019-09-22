@@ -10,5 +10,6 @@ target 'TableViewWithREST' do
   pod 'PINRemoteImage', '2.1'
   pod 'Locksmith', '4.0'
   pod 'XLForm', '4.0'
+  pod 'BRYXBanner', '0.8.4'   
 
 end

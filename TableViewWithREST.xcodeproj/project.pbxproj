@@ -18,6 +18,7 @@
 		4C18BAAE23271C4E00436C29 /* CircleCIAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */; };
 		4C18BAB0232AD8AD00436C29 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAAF232AD8AD00436C29 /* Project.swift */; };
 		4C18BAB223364B5900436C29 /* CreateGistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAB123364B5900436C29 /* CreateGistViewController.swift */; };
+		4C18BAB6233789CE00436C29 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C18BAB5233789CE00436C29 /* PersistenceManager.swift */; };
 		4C5DBFBB230FF4250082BA48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */; };
 		4C5DBFBD230FF4250082BA48 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */; };
 		4C5DBFBF230FF4250082BA48 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFBE230FF4250082BA48 /* DetailViewController.swift */; };
@@ -58,6 +59,7 @@
 		4C18BAAD23271C4E00436C29 /* CircleCIAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleCIAPIKeys.swift; path = OAuthKeys/CircleCIAPIKeys.swift; sourceTree = SOURCE_ROOT; };
 		4C18BAAF232AD8AD00436C29 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		4C18BAB123364B5900436C29 /* CreateGistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGistViewController.swift; sourceTree = "<group>"; };
+		4C18BAB5233789CE00436C29 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		4C5DBFB7230FF4250082BA48 /* TableViewWithREST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableViewWithREST.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C5DBFBC230FF4250082BA48 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				4CC7892D2322689300FD0532 /* Strava */,
 				4C18BAA823271B4700436C29 /* CircleCI */,
 				4C5DBFBA230FF4250082BA48 /* AppDelegate.swift */,
+				4C18BAB5233789CE00436C29 /* PersistenceManager.swift */,
 				4C5DBFC3230FF4250082BA48 /* Assets.xcassets */,
 				4C5DBFC8230FF4250082BA48 /* Info.plist */,
 			);
@@ -336,6 +339,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
@@ -347,6 +351,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
@@ -384,6 +389,7 @@
 				4C18BAAA23271B7100436C29 /* CircleCIAPIManager.swift in Sources */,
 				4CC78933232268A500FD0532 /* Exercise.swift in Sources */,
 				4CC8662D231DF25A00BCD2D0 /* StravaRouter.swift in Sources */,
+				4C18BAB6233789CE00436C29 /* PersistenceManager.swift in Sources */,
 				4C18BA992324854D00436C29 /* GitHubOAuthKeys.swift in Sources */,
 				4C5DBFD1230FF5100082BA48 /* GistRouter.swift in Sources */,
 				4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */,

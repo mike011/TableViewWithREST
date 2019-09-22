@@ -222,4 +222,17 @@ class GitHubAPIManager {
         }
         return nil
     }
+
+    func isAPIOnline(completionHandler: @escaping (Bool) -> Void ) {
+        AF.request(GistRouter.baseURLString)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case .success:
+                    completionHandler(true)
+                case .failure:
+                    completionHandler(false)
+            }
+        }
+    }
 }

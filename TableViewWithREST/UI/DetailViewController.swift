@@ -6,6 +6,7 @@
 //  Copyright © 2019 charland. All rights reserved.
 //
 
+import BRYXBanner
 import SafariServices
 import UIKit
 
@@ -14,6 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     var isStarred: Bool?
     var alertController: UIAlertController!
+    var errorBanner: Banner?
 
     func configureView() {
         if let _ = self.gist {
@@ -28,6 +30,13 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureView()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if let existingBanner = self.errorBanner {
+            existingBanner.dismiss()
+        }
+        super.viewWillDisappear(animated)
     }
 
     var gist: Gist? {
@@ -63,11 +72,24 @@ extension DetailViewController {
                     let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
                     self.alertController.addAction(ok)
                     self.present(self.alertController, animated: true, completion: nil)
+                case let BackendError.network(innerError as NSError):
+                    if innerError.domain != NSURLErrorDomain {
+                        return
+                    }
+                    if innerError.code == NSURLErrorNotConnectedToInternet {
+                        self.showNotConnectedErrorBanner(title: "No internet", message: "Can't star")
+                    }
                 default:
                     return
                 }
             }
         }
+    }
+
+    func showNotConnectedErrorBanner(title: String, message: String) {
+        errorBanner = Banner(title: title, subtitle: message, image: nil, backgroundColor: .orange, didTapBlock: nil)
+        self.errorBanner?.dismissesOnSwipe
+        self.errorBanner?.show(nil, duration: nil)
     }
 
     func starThisGist() {

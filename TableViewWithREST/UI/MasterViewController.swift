@@ -6,6 +6,7 @@
 //  Copyright © 2019 charland. All rights reserved.
 //
 
+import BRYXBanner
 import PINRemoteImage
 import SafariServices
 import UIKit
@@ -18,6 +19,8 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
     // MARK: - App
     var detailViewController: DetailViewController?
     var safariViewController: SFSafariViewController?
+    var errorBanner: Banner?
+
     var gists: [Gist] = []
     var nextPageURLString: String?
     var isLoading = false
@@ -66,13 +69,32 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        if let existingBanner = self.errorBanner {
+            existingBanner.dismiss()
+        }
+        super.viewWillDisappear(animated)
+    }
+
     func loadInitialData() {
         isLoading = true
         GitHubAPIManager.shared.OAuthTokenCompletionHandler = { error in
             guard error == nil else {
                 print(error!)
                 self.isLoading = false
-                // TODO: handle error
+                switch(error!) {
+                case let BackendError.network(innerError as NSError):
+                    if innerError.domain != NSURLErrorDomain {
+                        break
+                    }
+                    if innerError.code == NSURLErrorNotConnectedToInternet {
+                        self.showNotConnectedBanner()
+                        return
+                    }
+                default:
+                    break
+                }
+
                 // Something went wrong, try again
                 self.showOAuthLoginView()
                 return
@@ -189,12 +211,29 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                     self.gists = []
                 }
                 self.gists += data
+
+                let path: PersistenceManager.Path = [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
+                let success = PersistenceManager.save(self.gists, path: path)
+                if (!success) {
+                    self.showOfflineSaveFileBanner()
+                }
+
             case .failure(let error):
                 self.handleLoadGistsError(error)
             }
             self.tableView.reloadData()
         }
         return completionHandler
+    }
+
+    func showOfflineSaveFileBanner() {
+        if let existingBanner = errorBanner {
+            existingBanner.dismiss()
+        }
+
+        self.errorBanner = Banner(title: "Save failed", subtitle: "Could not save", image: nil, backgroundColor: .red, didTapBlock: nil)
+        self.errorBanner?.dismissesOnSwipe = true
+        self.errorBanner?.show(nil, duration: nil)
     }
 
     func handleLoadGistsError(_ error: Error) {
@@ -204,9 +243,37 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         case BackendError.authLost:
             self.showOAuthLoginView()
             return
+        case let BackendError.network(innerError as NSError):
+            if innerError.domain != NSURLErrorDomain {
+                break
+            }
+            if innerError.code == NSURLErrorNetworkConnectionLost ||
+                innerError.code == NSURLErrorNotConnectedToInternet {
+
+                let path: PersistenceManager.Path = [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
+                if let archived: [Gist] = PersistenceManager.load(path: path) {
+                    self.gists = archived
+                } else {
+                    self.gists = []
+                }
+                self.tableView.reloadData()
+                showNotConnectedBanner()
+                return
+            }
         default:
             break
         }
+    }
+
+    func showNotConnectedBanner() {
+
+        if let banner = errorBanner {
+            banner.dismiss()
+        }
+
+        self.errorBanner = Banner(title: "No internet connection", subtitle: "Could not load gists", image: nil, backgroundColor: .red, didTapBlock: nil)
+        self.errorBanner?.dismissesOnSwipe = true
+        self.errorBanner?.show(nil, duration: nil)
     }
 
     @objc
@@ -338,6 +405,17 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         // Detect not being able to load the OAuth URL
         if (!didLoadSuccessfully) {
             controller.dismiss(animated: true, completion: nil)
+            GitHubAPIManager.shared.isAPIOnline { (result) in
+                if !result {
+                    print("You're offline")
+                    let innerError = NSError(
+                        domain: NSURLErrorDomain,
+                        code: NSURLErrorNotConnectedToInternet,
+                        userInfo: [NSLocalizedDescriptionKey: "No Internet",    NSLocalizedRecoverySuggestionErrorKey: "Pls retry"])
+                    let error = BackendError.network(error: innerError)
+                    GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
+                }
+            }
         }
     }
 }
