@@ -13,11 +13,13 @@ enum MashapeRouter: URLRequestConvertible {
     static let baseURLString = "https://mashape-community-urban-dictionary.p.rapidapi.com/"
     case getDefinition(String)
 
-    func asURLRequest() throws -> URLRequest { var method: HTTPMethod {
+    func asURLRequest() throws -> URLRequest {
 
-        switch self {
-        case .getDefinition:
-            return .get }
+        var method: HTTPMethod {
+            switch self {
+            case .getDefinition:
+                return .get
+            }
         }
 
         let url: URL = {
@@ -43,5 +45,6 @@ enum MashapeRouter: URLRequestConvertible {
         urlRequest.setValue(MashapeAPIKeys.api, forHTTPHeaderField: "x-rapidapi-key")
 
         let encoding = URLEncoding.default
-        return try encoding.encode(urlRequest, with: params) }
+        return try encoding.encode(urlRequest, with: params)
+    }
 }

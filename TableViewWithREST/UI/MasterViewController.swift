@@ -33,6 +33,11 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             let controllers = split.viewControllers
             detailViewController = (controllers.last as! UINavigationController).topViewController as? DetailViewController
         }
+
+        if StravaAPIManager.shared.hasOAuthToken() {
+            printActivities()
+            return
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,11 +59,11 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         //GitHubAPIManager.shared.printMyStarredGistsWithBasicAuth()
         //DarkSkyAPIManager.shared.getForecast(location: "51.50998,-0.1337")
         //GitHubAPIManager.shared.printMashapeRouterRequest()
-//        if (GitHubAPIManager.shared.hasOAuthToken()) {
-//            GitHubAPIManager.shared.mergePullRequest()
-//        }
-       // CircleCIAPIManager.shared.printProjects()
-//        CircleCIAPIManager.shared.printSingleJob()
+        //        if (GitHubAPIManager.shared.hasOAuthToken()) {
+        //            GitHubAPIManager.shared.mergePullRequest()
+        //        }
+        // CircleCIAPIManager.shared.printProjects()
+        //        CircleCIAPIManager.shared.printSingleJob()
         // END TEST
 
         self.dateFormatter.dateStyle = .short
@@ -78,7 +83,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
 
     func loadInitialData() {
         isLoading = true
-        GitHubAPIManager.shared.OAuthTokenCompletionHandler = { error in
+        GitHubAPIManager.shared.oAuthTokenCompletionHandler = { error in
             guard error == nil else {
                 print(error!)
                 self.isLoading = false
@@ -105,7 +110,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             self.loadGists(urlToLoad: nil)
         }
 
-        StravaAPIManager.shared.OAuthTokenCompletionHandler = { error in
+        StravaAPIManager.shared.oAuthTokenCompletionHandler = { error in
             guard error == nil else {
                 print(error!)
                 self.isLoading = false
@@ -120,7 +125,21 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             self.printActivities()
         }
 
-        if (!GitHubAPIManager.shared.hasOAuthToken()) {
+        PocketAPIManager.shared.oAuthTokenCompletionHandler = { error in
+            guard error == nil else {
+                print(error!)
+                self.isLoading = false
+                // TODO: handle error
+                // Something went wrong, try again
+                self.showOAuthLoginView()
+                return
+            }
+            if let _ = self.safariViewController {
+                self.dismiss(animated: false) {}
+            }
+        }
+
+        if (!PocketAPIManager.shared.hasOAuthToken()) {
             showOAuthLoginView()
             return
         }
@@ -128,13 +147,13 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
     }
 
     func showOAuthLoginView() {
-        GitHubAPIManager.shared.isLoadingOAuthToken = true
+        PocketAPIManager.shared.isLoadingOAuthToken = true
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         guard let loginVC = storyboard.instantiateViewController(
             withIdentifier: "LoginViewController") as? LoginViewController else {
                 assert(false, "Misnamed view controller")
                 return
-        }
+            }
         loginVC.delegate = self
         self.present(loginVC, animated: true, completion: nil)
     }
@@ -159,6 +178,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                 print("Commutes Printed")
             case let .failure(error):
                 print("Error!! \(error.localizedDescription)")
+                //self.login()
             }
         }
     }
@@ -195,7 +215,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
 
             // tell refresh control it can stop showing up now
             if let refreshControl = self.refreshControl,
-                refreshControl.isRefreshing {
+               refreshControl.isRefreshing {
                 refreshControl.endRefreshing()
             }
 
@@ -337,13 +357,13 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                 cell.imageView?.image = placeholder
                 if let url = gist.owner?.avatarURL {
                     cell.imageView?.pin_setImage(from: url, placeholderImage:
-                    placeholder) {
+                                                    placeholder) {
                         result in
                         if let cellToUpdate = self.tableView?.cellForRow(at: indexPath) {
                             cellToUpdate.setNeedsLayout()
                         }
                     }
-                } 
+                }
                 cell.setNeedsLayout()
             }
         }
@@ -354,7 +374,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-         return gistSegmentedControl.selectedSegmentIndex == 2
+        return gistSegmentedControl.selectedSegmentIndex == 2
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -401,32 +421,33 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
     func safariViewController(
         _ controller: SFSafariViewController,
         didCompleteInitialLoad didLoadSuccessfully: Bool) {
-        
-        // Detect not being able to load the OAuth URL
-        if (!didLoadSuccessfully) {
-            controller.dismiss(animated: true, completion: nil)
-            GitHubAPIManager.shared.isAPIOnline { (result) in
-                if !result {
-                    print("You're offline")
-                    let innerError = NSError(
-                        domain: NSURLErrorDomain,
-                        code: NSURLErrorNotConnectedToInternet,
-                        userInfo: [NSLocalizedDescriptionKey: "No Internet",    NSLocalizedRecoverySuggestionErrorKey: "Pls retry"])
-                    let error = BackendError.network(error: innerError)
-                    GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
+
+            // Detect not being able to load the OAuth URL
+            if (!didLoadSuccessfully) {
+                controller.dismiss(animated: true, completion: nil)
+                GitHubAPIManager.shared.isAPIOnline { (result) in
+                    if !result {
+                        print("You're offline")
+                        let innerError = NSError(
+                            domain: NSURLErrorDomain,
+                            code: NSURLErrorNotConnectedToInternet,
+                            userInfo: [NSLocalizedDescriptionKey: "No Internet",    NSLocalizedRecoverySuggestionErrorKey: "Pls retry"])
+                        let error = BackendError.network(error: innerError)
+                        GitHubAPIManager.shared.oAuthTokenCompletionHandler?(error)
+                    }
                 }
             }
         }
-    }
 }
 
 extension MasterViewController: LoginViewDelegate {
 
     func didTapLoginButton() {
-        self.dismiss(animated: false) {
-            guard let authURL = GitHubAPIManager.shared.URLToStartOAuth2Login() else {
+        dismiss(animated: false) {
+
+            guard let authURL = GitHubAPIManager.shared.convertURLToStartOAuth2Login() else {
                 let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-                GitHubAPIManager.shared.OAuthTokenCompletionHandler?(error)
+                GitHubAPIManager.shared.oAuthTokenCompletionHandler?(error)
                 return
             }
             // Show web page to start OAuth
@@ -436,23 +457,8 @@ extension MasterViewController: LoginViewDelegate {
                 return
             }
             self.present(webViewController, animated: true, completion: nil)
-        }
-    }
-}
 
-extension MasterViewController {
-    func didTapAuthenticateButton() {
-        self.dismiss(animated: false) {
-            guard !StravaAPIManager.shared.hasOAuthToken() else {
-                self.printActivities()
-                return
-            }
-            guard let authURL = StravaAPIManager.shared.URLToStartOAuth2Login() else {
-                let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-                StravaAPIManager.shared.OAuthTokenCompletionHandler?(error)
-                return
-            }
-            // Show web page to start oauth
+            // Show web page to start OAuth
             self.safariViewController = SFSafariViewController(url: authURL)
             self.safariViewController?.delegate = self
             guard let webViewController = self.safariViewController else {
@@ -460,6 +466,61 @@ extension MasterViewController {
             }
             self.present(webViewController, animated: true, completion: nil)
         }
+    }
+
+    func didTapPocketAuthenticateButton() {
+        dismiss(animated: false) {
+            PocketAPIManager.shared.requestToken { result in
+                switch result {
+                case .success(let code):
+                    self.handleSuccessfulRequest(code)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func handleSuccessfulRequest(_ requestToken: String) {
+        guard let authURL = PocketAPIManager.shared.convertURLToStartOAuth2Login(requestToken) else {
+            let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
+            PocketAPIManager.shared.oAuthTokenCompletionHandler?(error)
+            return
+        }
+        // Show web page to start OAuth
+        safariViewController = SFSafariViewController(url: authURL)
+        safariViewController?.delegate = self
+        guard let webViewController = self.safariViewController else {
+            return
+        }
+        present(webViewController, animated: true, completion: nil)
+    }
+}
+
+extension MasterViewController {
+    func didTapAuthenticateButton() {
+        dismiss(animated: false) {
+            guard StravaAPIManager.shared.hasOAuthToken() else {
+                self.login()
+                return
+            }
+            self.printActivities()
+        }
+    }
+
+    func login() {
+        guard let authURL = StravaAPIManager.shared.URLToStartOAuth2Login() else {
+            let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
+            StravaAPIManager.shared.oAuthTokenCompletionHandler?(error)
+            return
+        }
+        // Show web page to start oauth
+        safariViewController = SFSafariViewController(url: authURL)
+        safariViewController?.delegate = self
+        guard let webViewController = self.safariViewController else {
+            return
+        }
+        present(webViewController, animated: true, completion: nil)
     }
 }
 

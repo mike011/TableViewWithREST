@@ -19,4 +19,8 @@ class LoginViewController: UIViewController {
     @IBAction func authenticateWithStrava() {
         delegate?.didTapAuthenticateButton()
     }
+
+    @IBAction func pocketAuthenticate() {
+        delegate?.didTapPocketAuthenticateButton()
+    }
 }

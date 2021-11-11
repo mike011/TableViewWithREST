@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 
 enum BackendError: Error {
+    case request(error: Error)
     case network(error: Error)
     case unexpectedResponse(reason: String)
     case parsing(error: Error)

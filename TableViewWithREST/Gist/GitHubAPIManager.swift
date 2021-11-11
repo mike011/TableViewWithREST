@@ -17,9 +17,9 @@ class GitHubAPIManager {
     // handler for the OAuth process
     // stored as var since sometimes it requires a round trip to safari which
     // makes it hard to just keep a reference to it
-    var OAuthTokenCompletionHandler:((Error?) -> Void)?
+    var oAuthTokenCompletionHandler:((Error?) -> Void)?
 
-    var OAuthToken: String?
+    var oAuthToken: String?
     {
         set {
             guard let newValue = newValue else {
@@ -92,7 +92,7 @@ class GitHubAPIManager {
     // MARK: - OAuth flow
 
     func hasOAuthToken() -> Bool {
-        if let token = self.OAuthToken {
+        if let token = self.oAuthToken {
             return !token.isEmpty
         }
         return false
@@ -109,7 +109,7 @@ class GitHubAPIManager {
         }
     }
 
-    func URLToStartOAuth2Login() -> URL? {
+    func convertURLToStartOAuth2Login() -> URL? {
         let authPath: String = "https://github.com/login/oauth/authorize" +
         "?client_id=\(GitHubOAuthKeys.clientID)&scope=repo,gist&state=TEST_STATE"
         return URL(string: authPath)
@@ -120,7 +120,7 @@ class GitHubAPIManager {
         guard let code = extractCodeFromOAuthStep1Response(url) else {
             isLoadingOAuthToken = false
             let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-            OAuthTokenCompletionHandler?(error)
+            oAuthTokenCompletionHandler?(error)
             return
         }
 
@@ -161,36 +161,36 @@ class GitHubAPIManager {
                 self.isLoadingOAuthToken = false
                 let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                 let error = BackendError.authCouldNot(reason: errorMessage)
-                self.OAuthTokenCompletionHandler?(error)
+                self.oAuthTokenCompletionHandler?(error)
                 return
             }
             guard let value = response.value else {
                 self.isLoadingOAuthToken = false
                 let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                 let error = BackendError.authCouldNot(reason: errorMessage)
-                self.OAuthTokenCompletionHandler?(error)
+                self.oAuthTokenCompletionHandler?(error)
                 return
             }
             guard let jsonResult = value as? [String: String] else {
                 self.isLoadingOAuthToken = false
                 let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                 let error = BackendError.authCouldNot(reason: errorMessage)
-                self.OAuthTokenCompletionHandler?(error)
+                self.oAuthTokenCompletionHandler?(error)
                 return
             }
             print(jsonResult)
             // like {"access_token": "9999999", "token_type": "bearer", "scope": "gist"}
-            self.OAuthToken = self.parseOAuthTokenResponse(jsonResult)
+            self.oAuthToken = self.parseOAuthTokenResponse(jsonResult)
 
             self.isLoadingOAuthToken = false
             guard self.hasOAuthToken() else {
                 return
             }
             if self.hasOAuthToken() {
-                self.OAuthTokenCompletionHandler?(nil)
+                self.oAuthTokenCompletionHandler?(nil)
             } else {
                 let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-                self.OAuthTokenCompletionHandler?(error)
+                self.oAuthTokenCompletionHandler?(error)
             }
         }
     }
@@ -217,7 +217,7 @@ class GitHubAPIManager {
 
     func checkUnauthorized(urlResponse: HTTPURLResponse) -> (Error?) {
         if (urlResponse.statusCode == 401) {
-            self.OAuthToken = nil
+            self.oAuthToken = nil
             return BackendError.authLost(reason: "Not Logged In")
         }
         return nil

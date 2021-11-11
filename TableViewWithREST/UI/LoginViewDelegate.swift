@@ -8,7 +8,8 @@
 
 import Foundation
 
-protocol LoginViewDelegate: class {
+protocol LoginViewDelegate: AnyObject {
     func didTapLoginButton()
     func didTapAuthenticateButton()
+    func didTapPocketAuthenticateButton()
 }

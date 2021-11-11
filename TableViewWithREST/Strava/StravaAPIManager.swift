@@ -20,7 +20,7 @@ class StravaAPIManager {
     // handler for the OAuth process
     // stored as var since sometimes it requires a round trip to safari which
     // makes it hard to just keep a reference to it
-    var OAuthTokenCompletionHandler:((Error?) -> Void)?
+    var oAuthTokenCompletionHandler:((Error?) -> Void)?
 
     var OAuthToken: String?
     {
@@ -57,7 +57,7 @@ class StravaAPIManager {
         guard let code = extractCodeFromOAuthStep1Response(url) else {
             isLoadingOAuthToken = false
             let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-            OAuthTokenCompletionHandler?(error)
+            oAuthTokenCompletionHandler?(error)
             return
         }
 
@@ -99,21 +99,21 @@ class StravaAPIManager {
                     self.isLoadingOAuthToken = false
                     let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                     let error = BackendError.authCouldNot(reason: errorMessage)
-                    self.OAuthTokenCompletionHandler?(error)
+                    self.oAuthTokenCompletionHandler?(error)
                     return
                 }
                 guard let value = response.value else {
                     self.isLoadingOAuthToken = false
                     let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                     let error = BackendError.authCouldNot(reason: errorMessage)
-                    self.OAuthTokenCompletionHandler?(error)
+                    self.oAuthTokenCompletionHandler?(error)
                     return
                 }
                 guard let jsonResult = value as? [String: Any] else {
                     self.isLoadingOAuthToken = false
                     let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                     let error = BackendError.authCouldNot(reason: errorMessage)
-                    self.OAuthTokenCompletionHandler?(error)
+                    self.oAuthTokenCompletionHandler?(error)
                     return
                 }
                 print(jsonResult)
@@ -125,10 +125,10 @@ class StravaAPIManager {
                     return
                 }
                 if self.hasOAuthToken() {
-                    self.OAuthTokenCompletionHandler?(nil)
+                    self.oAuthTokenCompletionHandler?(nil)
                 } else {
                     let error = BackendError.authCouldNot(reason: "Could not obtain an OAuth token")
-                    self.OAuthTokenCompletionHandler?(error)
+                    self.oAuthTokenCompletionHandler?(error)
                 }
         }
     }

@@ -55,7 +55,7 @@ enum PullRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
 
         // Set OAuth token if we have one
-        if let token = GitHubAPIManager.shared.OAuthToken {
+        if let token = GitHubAPIManager.shared.oAuthToken {
             urlRequest.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         }
 

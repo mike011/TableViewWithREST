@@ -158,7 +158,7 @@ extension Exercise {
     func print(_ strings: [String]) {
         var combined = strings.first ?? ""
         for string in strings.dropFirst() {
-            combined += "\t\(string)"
+            combined += ",\(string)"
         }
         Swift.print(combined)
     }

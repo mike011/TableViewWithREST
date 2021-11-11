@@ -68,6 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             StravaAPIManager.shared.processOAuthStep1Response(url)
         } else if url.absoluteString.starts(with: "grokgithuboauth") {
             GitHubAPIManager.shared.processOAuthStep1Response(url)
+        } else if url.absoluteString.starts(with: "pocket") {
+            PocketAPIManager.shared.processOAuthStep1Response()
         }
         return true
     }
