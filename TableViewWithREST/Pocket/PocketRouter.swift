@@ -15,7 +15,7 @@ enum PocketRouter: URLRequestConvertible {
 
     case request
     case authorize(code: String)
-    case get
+    case get(token: String, tagType: String? = nil)
 
     func asURLRequest() throws -> URLRequest {
         var method: HTTPMethod {
@@ -47,8 +47,15 @@ enum PocketRouter: URLRequestConvertible {
             case .authorize(let code):
                 return ["consumer_key": PocketRouter.consumerKey,
                         "code": code]
-            case .get:
-                return nil
+            case .get(let token, let tagType):
+                var getParams = ["consumer_key": PocketRouter.consumerKey,
+                                  "access_token": token,
+                                  "detailType": "complete",
+                                  "sort": "oldest"]
+                if let tagType = tagType {
+                    getParams["tag"] = tagType
+                }
+                return getParams
             }
         }()
 
@@ -59,4 +66,3 @@ enum PocketRouter: URLRequestConvertible {
         return try encoding.encode(urlRequest, with: params)
     }
 }
-

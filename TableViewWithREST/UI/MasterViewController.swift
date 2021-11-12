@@ -109,6 +109,7 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             }
             self.loadGists(urlToLoad: nil)
         }
+        loadGists(urlToLoad: nil)
 
         StravaAPIManager.shared.oAuthTokenCompletionHandler = { error in
             guard error == nil else {
@@ -137,13 +138,17 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
             if let _ = self.safariViewController {
                 self.dismiss(animated: false) {}
             }
+            PocketAPIManager.shared.getItems()
         }
 
         if (!PocketAPIManager.shared.hasOAuthToken()) {
             showOAuthLoginView()
             return
+        } else {
+
+
+            PocketAPIManager.shared.getItems()
         }
-        loadGists(urlToLoad: nil)
     }
 
     func showOAuthLoginView() {

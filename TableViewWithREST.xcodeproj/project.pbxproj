@@ -43,6 +43,7 @@
 		4CC8662D231DF25A00BCD2D0 /* StravaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8662B231DF25A00BCD2D0 /* StravaRouter.swift */; };
 		4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8662E231DF45200BCD2D0 /* DarkSkyRouter.swift */; };
 		4CC86631231DF4F500BCD2D0 /* DarkSkyAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC86630231DF4F500BCD2D0 /* DarkSkyAPIManager.swift */; };
+		4CCFF532273DEE3B00B0259A /* PocketMyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCFF531273DEE3B00B0259A /* PocketMyList.swift */; };
 		4CF266F5273847D0003E06B4 /* PocketOAuthKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF266F4273847D0003E06B4 /* PocketOAuthKeys.swift */; };
 		4CF266F727384801003E06B4 /* PocketAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF266F627384801003E06B4 /* PocketAPIManager.swift */; };
 		4CF266F927384822003E06B4 /* PocketRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF266F827384822003E06B4 /* PocketRouter.swift */; };
@@ -89,6 +90,7 @@
 		4CC8662B231DF25A00BCD2D0 /* StravaRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StravaRouter.swift; sourceTree = "<group>"; };
 		4CC8662E231DF45200BCD2D0 /* DarkSkyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyRouter.swift; sourceTree = "<group>"; };
 		4CC86630231DF4F500BCD2D0 /* DarkSkyAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyAPIManager.swift; sourceTree = "<group>"; };
+		4CCFF531273DEE3B00B0259A /* PocketMyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketMyList.swift; sourceTree = "<group>"; };
 		4CF266F4273847D0003E06B4 /* PocketOAuthKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PocketOAuthKeys.swift; path = ../../../OAuthKeys/PocketOAuthKeys.swift; sourceTree = "<group>"; };
 		4CF266F627384801003E06B4 /* PocketAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketAPIManager.swift; sourceTree = "<group>"; };
 		4CF266F827384822003E06B4 /* PocketRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketRouter.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				4CF266F4273847D0003E06B4 /* PocketOAuthKeys.swift */,
 				4CF266F627384801003E06B4 /* PocketAPIManager.swift */,
 				4CF266F827384822003E06B4 /* PocketRouter.swift */,
+				4CCFF531273DEE3B00B0259A /* PocketMyList.swift */,
 			);
 			path = Pocket;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				4CC8662C231DF25A00BCD2D0 /* StravaAPIManager.swift in Sources */,
 				4C18BAA523257CD100436C29 /* GitHubAPIManager+Pull.swift in Sources */,
 				4C18BAA323257C9100436C29 /* GitHubAPIManager+Gist.swift in Sources */,
+				4CCFF532273DEE3B00B0259A /* PocketMyList.swift in Sources */,
 				4CC7893B23247E8000FD0532 /* StravaOAuthKeys.swift in Sources */,
 				4CC78931232268A500FD0532 /* Athlete.swift in Sources */,
 			);
