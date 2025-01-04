@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,11 @@
 		4C5DBFDB231927E00082BA48 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFDA231927E00082BA48 /* LoginViewController.swift */; };
 		4C5DBFDD231928C60082BA48 /* LoginViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DBFDC231928C60082BA48 /* LoginViewDelegate.swift */; };
 		4C5DBFDF23192B760082BA48 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5DBFDE23192B760082BA48 /* SafariServices.framework */; };
+		4C8102222D29A0D700151219 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8102212D29A0D700151219 /* Alamofire */; };
+		4C8102272D29A10C00151219 /* PINRemoteImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8102262D29A10C00151219 /* PINRemoteImage */; };
+		4C81022A2D29A18F00151219 /* Locksmith in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8102292D29A18F00151219 /* Locksmith */; };
+		4C81022D2D29A1B600151219 /* XLForm in Frameworks */ = {isa = PBXBuildFile; productRef = 4C81022C2D29A1B600151219 /* XLForm */; };
+		4C8102302D29A23100151219 /* BRYXBanner in Frameworks */ = {isa = PBXBuildFile; productRef = 4C81022F2D29A23100151219 /* BRYXBanner */; };
 		4CC78931232268A500FD0532 /* Athlete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7892E232268A500FD0532 /* Athlete.swift */; };
 		4CC78932232268A500FD0532 /* GeographyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7892F232268A500FD0532 /* GeographyMap.swift */; };
 		4CC78933232268A500FD0532 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC78930232268A500FD0532 /* Exercise.swift */; };
@@ -43,11 +48,9 @@
 		4CC8662D231DF25A00BCD2D0 /* StravaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8662B231DF25A00BCD2D0 /* StravaRouter.swift */; };
 		4CC8662F231DF45200BCD2D0 /* DarkSkyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8662E231DF45200BCD2D0 /* DarkSkyRouter.swift */; };
 		4CC86631231DF4F500BCD2D0 /* DarkSkyAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC86630231DF4F500BCD2D0 /* DarkSkyAPIManager.swift */; };
-		908C1EA289ADAB3FF9450A00 /* Pods_TableViewWithREST.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9623131E677A43CB43FAEDA /* Pods_TableViewWithREST.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A5C9E5DEDC7EA05AB51C976 /* Pods-TableViewWithREST.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewWithREST.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST.debug.xcconfig"; sourceTree = "<group>"; };
 		4C18BA982324854D00436C29 /* GitHubOAuthKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubOAuthKeys.swift; path = OAuthKeys/GitHubOAuthKeys.swift; sourceTree = SOURCE_ROOT; };
 		4C18BA9A2324858300436C29 /* MashapeAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MashapeAPIKeys.swift; path = OAuthKeys/MashapeAPIKeys.swift; sourceTree = SOURCE_ROOT; };
 		4C18BA9C232485A000436C29 /* DarkSkyAPIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DarkSkyAPIKeys.swift; path = OAuthKeys/DarkSkyAPIKeys.swift; sourceTree = SOURCE_ROOT; };
@@ -86,8 +89,6 @@
 		4CC8662B231DF25A00BCD2D0 /* StravaRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StravaRouter.swift; sourceTree = "<group>"; };
 		4CC8662E231DF45200BCD2D0 /* DarkSkyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyRouter.swift; sourceTree = "<group>"; };
 		4CC86630231DF4F500BCD2D0 /* DarkSkyAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyAPIManager.swift; sourceTree = "<group>"; };
-		83DFAFE9C5C9674D24644390 /* Pods-TableViewWithREST.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableViewWithREST.release.xcconfig"; path = "Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST.release.xcconfig"; sourceTree = "<group>"; };
-		E9623131E677A43CB43FAEDA /* Pods_TableViewWithREST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableViewWithREST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +96,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8102302D29A23100151219 /* BRYXBanner in Frameworks */,
+				4C81022D2D29A1B600151219 /* XLForm in Frameworks */,
+				4C8102272D29A10C00151219 /* PINRemoteImage in Frameworks */,
+				4C8102222D29A0D700151219 /* Alamofire in Frameworks */,
 				4C5DBFDF23192B760082BA48 /* SafariServices.framework in Frameworks */,
-				908C1EA289ADAB3FF9450A00 /* Pods_TableViewWithREST.framework in Frameworks */,
+				4C81022A2D29A18F00151219 /* Locksmith in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +180,6 @@
 			children = (
 				4C5DBFB9230FF4250082BA48 /* TableViewWithREST */,
 				4C5DBFB8230FF4250082BA48 /* Products */,
-				B10DCF25A54D446180310B98 /* Pods */,
 				7838BA0545CD7593C7F7285E /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -224,18 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				4C5DBFDE23192B760082BA48 /* SafariServices.framework */,
-				E9623131E677A43CB43FAEDA /* Pods_TableViewWithREST.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B10DCF25A54D446180310B98 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3A5C9E5DEDC7EA05AB51C976 /* Pods-TableViewWithREST.debug.xcconfig */,
-				83DFAFE9C5C9674D24644390 /* Pods-TableViewWithREST.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,11 +239,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C5DBFCB230FF4250082BA48 /* Build configuration list for PBXNativeTarget "TableViewWithREST" */;
 			buildPhases = (
-				7EC8DC5F60019651BCAD95C8 /* [CP] Check Pods Manifest.lock */,
 				4C5DBFB3230FF4250082BA48 /* Sources */,
 				4C5DBFB4230FF4250082BA48 /* Frameworks */,
 				4C5DBFB5230FF4250082BA48 /* Resources */,
-				94474AFBCC136F5FA70CD447 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -266,8 +258,9 @@
 		4C5DBFAF230FF4250082BA48 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1030;
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = charland;
 				TargetAttributes = {
 					4C5DBFB6230FF4250082BA48 = {
@@ -284,6 +277,13 @@
 				Base,
 			);
 			mainGroup = 4C5DBFAE230FF4250082BA48;
+			packageReferences = (
+				4C8102202D29A0D700151219 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4C8102252D29A10C00151219 /* XCRemoteSwiftPackageReference "PINRemoteImage" */,
+				4C8102282D29A18F00151219 /* XCRemoteSwiftPackageReference "Locksmith" */,
+				4C81022B2D29A1B600151219 /* XCRemoteSwiftPackageReference "XLForm" */,
+				4C81022E2D29A23100151219 /* XCRemoteSwiftPackageReference "BRYXBanner" */,
+			);
 			productRefGroup = 4C5DBFB8230FF4250082BA48 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -305,65 +305,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		7EC8DC5F60019651BCAD95C8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TableViewWithREST-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		94474AFBCC136F5FA70CD447 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
-				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
-				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
-				"${BUILT_PRODUCTS_DIR}/XLForm/XLForm.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLForm.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TableViewWithREST/Pods-TableViewWithREST-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4C5DBFB3230FF4250082BA48 /* Sources */ = {
@@ -431,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -453,6 +395,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -464,6 +407,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -492,6 +436,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -514,6 +459,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -525,6 +471,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -545,12 +492,12 @@
 		};
 		4C5DBFCC230FF4250082BA48 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A5C9E5DEDC7EA05AB51C976 /* Pods-TableViewWithREST.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CY96495443;
 				INFOPLIST_FILE = TableViewWithREST/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,12 +511,12 @@
 		};
 		4C5DBFCD230FF4250082BA48 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83DFAFE9C5C9674D24644390 /* Pods-TableViewWithREST.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CY96495443;
 				INFOPLIST_FILE = TableViewWithREST/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -603,6 +550,77 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4C8102202D29A0D700151219 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		4C8102252D29A10C00151219 /* XCRemoteSwiftPackageReference "PINRemoteImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:pinterest/PINRemoteImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
+		4C8102282D29A18F00151219 /* XCRemoteSwiftPackageReference "Locksmith" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joaodforce/Locksmith";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		4C81022B2D29A1B600151219 /* XCRemoteSwiftPackageReference "XLForm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:xmartlabs/XLForm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.0;
+			};
+		};
+		4C81022E2D29A23100151219 /* XCRemoteSwiftPackageReference "BRYXBanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:trusk89/BRYXBanner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4C8102212D29A0D700151219 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8102202D29A0D700151219 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		4C8102262D29A10C00151219 /* PINRemoteImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8102252D29A10C00151219 /* XCRemoteSwiftPackageReference "PINRemoteImage" */;
+			productName = PINRemoteImage;
+		};
+		4C8102292D29A18F00151219 /* Locksmith */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C8102282D29A18F00151219 /* XCRemoteSwiftPackageReference "Locksmith" */;
+			productName = Locksmith;
+		};
+		4C81022C2D29A1B600151219 /* XLForm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C81022B2D29A1B600151219 /* XCRemoteSwiftPackageReference "XLForm" */;
+			productName = XLForm;
+		};
+		4C81022F2D29A23100151219 /* BRYXBanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C81022E2D29A23100151219 /* XCRemoteSwiftPackageReference "BRYXBanner" */;
+			productName = BRYXBanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4C5DBFAF230FF4250082BA48 /* Project object */;
 }

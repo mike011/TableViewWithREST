@@ -11,7 +11,7 @@ import Foundation
 
 extension JSONDecoder {
 
-    func decodeResponse2<T: Decodable>(from response: DataResponse<Data>) -> Result<T, Error> {
+    func decodeResponse2<T: Decodable>(from response: DataResponse<Data, AFError>) -> Result<T, Error> {
 
         guard response.error == nil else {
             // got an error in getting the data, need to handle it
@@ -42,7 +42,7 @@ extension JSONDecoder {
         }
     }
 
-    func decodeResponse<T: Decodable>(from response: DataResponse<Data>) -> Result<T, Error> {
+    func decodeResponse<T: Decodable>(from response: DataResponse<Data, AFError>) -> Result<T, Error> {
         guard response.error == nil else {
             // got an error in getting the data, need to handle it
             print(response.error!)

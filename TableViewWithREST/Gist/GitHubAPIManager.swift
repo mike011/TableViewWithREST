@@ -9,6 +9,7 @@
 import Alamofire
 import Foundation
 import Locksmith
+import UIKit
 
 class GitHubAPIManager {
     static let shared = GitHubAPIManager()

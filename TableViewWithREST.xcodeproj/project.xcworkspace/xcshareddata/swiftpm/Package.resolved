@@ -1,0 +1,69 @@
+{
+  "originHash" : "7de0da86591050b14b7aa0bf545cac6dfb3ddb8fbe3c70cfce1f10c9cbb325f0",
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "bryxbanner",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:trusk89/BRYXBanner.git",
+      "state" : {
+        "revision" : "d251c07a3a264766c1480900d39d9d9294b28254",
+        "version" : "0.8.5"
+      }
+    },
+    {
+      "identity" : "locksmith",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/joaodforce/Locksmith",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c2477484052857c20758a460493cd8c5d2564c07"
+      }
+    },
+    {
+      "identity" : "pincache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pinterest/PINCache.git",
+      "state" : {
+        "revision" : "2fb85948463292c2e824148cf17dc62a4c217a94",
+        "version" : "3.0.4"
+      }
+    },
+    {
+      "identity" : "pinoperation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pinterest/PINOperation.git",
+      "state" : {
+        "revision" : "a74f978733bdaf982758bfa23d70a189f4b4c1b6",
+        "version" : "1.2.3"
+      }
+    },
+    {
+      "identity" : "pinremoteimage",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:pinterest/PINRemoteImage.git",
+      "state" : {
+        "revision" : "37022d0fb9359ce33fa06028d03382c8b9957c62",
+        "version" : "3.0.4"
+      }
+    },
+    {
+      "identity" : "xlform",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:xmartlabs/XLForm.git",
+      "state" : {
+        "revision" : "870afc56602fd518e33d0b271371a2d5acd410ea",
+        "version" : "4.3.0"
+      }
+    }
+  ],
+  "version" : 3
+}

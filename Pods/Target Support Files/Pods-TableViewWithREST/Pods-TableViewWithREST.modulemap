@@ -1,6 +1,0 @@
-framework module Pods_TableViewWithREST {
-  umbrella header "Pods-TableViewWithREST-umbrella.h"
-
-  export *
-  module * { export * }
-}
