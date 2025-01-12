@@ -31,7 +31,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func fetchMyGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
+    func fetchMyGists(pageToLoad: String?, completionHandler: @Sendable @escaping (Result<[Gist], Error>, String?) -> Void) {
         if let urlString = pageToLoad {
             fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
         } else {
@@ -39,7 +39,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func fetchMyStarredGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
+    func fetchMyStarredGists(pageToLoad: String?, completionHandler: @Sendable @escaping (Result<[Gist], Error>, String?) -> Void) {
         if let urlString = pageToLoad {
             fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
         } else {
@@ -47,7 +47,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func fetchPublicGists(pageToLoad: String?, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
+    func fetchPublicGists(pageToLoad: String?, completionHandler: @Sendable @escaping (Result<[Gist], Error>, String?) -> Void) {
         if let urlString = pageToLoad {
             self.fetchGists(GistRouter.getAtPath(urlString), completionHandler: completionHandler)
         } else {
@@ -55,7 +55,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func fetchGists(_ urlRequest: URLRequestConvertible, completionHandler: @escaping (Result<[Gist], Error>, String?) -> Void) {
+    func fetchGists(_ urlRequest: URLRequestConvertible, completionHandler: @Sendable @escaping (Result<[Gist], Error>, String?) -> Void) {
         AF.request(urlRequest).responseData { (response) in
             if let urlResponse = response.response,
                 let authError = self.checkUnauthorized(urlResponse: urlResponse) {
@@ -70,7 +70,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func isGistStarred(withID gistID: String, completionHandler: @escaping (Result<Bool,Error>) -> Void) {
+    func isGistStarred(withID gistID: String, completionHandler: @Sendable @escaping (Result<Bool,Error>) -> Void) {
         AF.request(GistRouter.isStarred(id: gistID))
             .validate(statusCode: [204]).responseData { (response) in
                 if let urlResponse = response.response,
@@ -96,7 +96,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func starGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+    func starGist(withID gistID: String, completionHandler: @Sendable @escaping (Result<Any?, Error>) -> Void) {
         AF.request(GistRouter.star(id: gistID)).responseData { (response) in
             if let urlResponse = response.response,
                 let authError = self.checkUnauthorized(urlResponse: urlResponse)
@@ -114,7 +114,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func unstarGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+    func unstarGist(withID gistID: String, completionHandler: @Sendable @escaping (Result<Any?, Error>) -> Void) {
         AF.request(GistRouter.unstar(id: gistID)).responseData { (response) in
             if let urlResponse = response.response,
                 let authError = self.checkUnauthorized(urlResponse: urlResponse)
@@ -132,7 +132,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func deleteGist(withID gistID: String, completionHandler: @escaping (Result<Any?, Error>) -> Void) {
+    func deleteGist(withID gistID: String, completionHandler: @Sendable @escaping (Result<Any?, Error>) -> Void) {
         AF.request(GistRouter.delete(id: gistID)).responseData { (response) in
             if let urlResponse = response.response,
                 let authError = self.checkUnauthorized(urlResponse: urlResponse)
@@ -151,7 +151,7 @@ extension GitHubAPIManager {
         }
     }
 
-    func creaateGist(gist: Gist, completionHandler: @escaping (Result<Any?, Error>) -> Void ) {
+    func creaateGist(gist: Gist, completionHandler: @Sendable @escaping (Result<Any?, Error>) -> Void ) {
 
         guard let _ = gist.gistDescription else {
             let error = BackendError.missingRequiredInput(reason: "No Description provided")

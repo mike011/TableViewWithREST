@@ -31,7 +31,7 @@ enum MashapeRouter: URLRequestConvertible {
             return url
         }()
 
-        let params: ([String: Any]?) = {
+        let params: ([String: String]?) = {
             switch self {
             case .getDefinition(let wordToDefine):
                 return ["term": wordToDefine] }

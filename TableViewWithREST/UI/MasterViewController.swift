@@ -11,7 +11,8 @@ import PINRemoteImage
 import SafariServices
 import UIKit
 
-class MasterViewController: UITableViewController, SFSafariViewControllerDelegate {
+@MainActor
+class MasterViewController: UITableViewController, @preconcurrency SFSafariViewControllerDelegate {
 
     // MARK: - Outlets
     @IBOutlet var gistSegmentedControl: UISegmentedControl!
@@ -187,41 +188,43 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
         }
     }
 
-    func getCompletionHandler(urlToLoad: String?) -> (Result<[Gist], Error>, String?) -> Void {
-        let completionHandler: (Result<[Gist], Error>, String?) -> Void = {
+    func getCompletionHandler(urlToLoad: String?) -> @Sendable (Result<[Gist], Error>, String?) -> Void {
+        let completionHandler: @Sendable (Result<[Gist], Error>, String?) -> Void = {
             (result, nextPage) in
-            self.isLoading = false
-            self.nextPageURLString = nextPage
-
-            // tell refresh control it can stop showing up now
-            if let refreshControl = self.refreshControl,
-                refreshControl.isRefreshing {
-                refreshControl.endRefreshing()
-            }
-
-            // update "last updated" title for refresh control
-            let now = Date()
-            let updateString = "Last Updated at " + self.dateFormatter.string(from: now)
-            self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
-
-            switch result {
-            case .success(let data):
-                if urlToLoad == nil {
-                    // empty out the gists because we're not loading another page
-                    self.gists = []
+            MainActor.assumeIsolated {
+                self.isLoading = false
+                self.nextPageURLString = nextPage
+                
+                // tell refresh control it can stop showing up now
+                if let refreshControl = self.refreshControl,
+                   refreshControl.isRefreshing {
+                    refreshControl.endRefreshing()
                 }
-                self.gists += data
-
-                let path: PersistenceManager.Path = [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
-                let success = PersistenceManager.save(self.gists, path: path)
-                if (!success) {
-                    self.showOfflineSaveFileBanner()
+                
+                // update "last updated" title for refresh control
+                let now = Date()
+                let updateString = "Last Updated at " + self.dateFormatter.string(from: now)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                switch result {
+                case .success(let data):
+                    if urlToLoad == nil {
+                        // empty out the gists because we're not loading another page
+                        self.gists = []
+                    }
+                    self.gists += data
+                    
+                    let path: PersistenceManager.Path = [.Public, .Starred, .MyGists][self.gistSegmentedControl.selectedSegmentIndex]
+                    let success = PersistenceManager.save(self.gists, path: path)
+                    if (!success) {
+                        self.showOfflineSaveFileBanner()
+                    }
+                    
+                case .failure(let error):
+                    self.handleLoadGistsError(error)
                 }
-
-            case .failure(let error):
-                self.handleLoadGistsError(error)
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
         }
         return completionHandler
     }
@@ -332,19 +335,21 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                     return
                 }
 
-                // set cell.imageView to display image at gist.owner?.avatarURL
-                let placeholder = UIImage(named: "placeholder")
-                cell.imageView?.image = placeholder
-                if let url = gist.owner?.avatarURL {
-                    cell.imageView?.pin_setImage(from: url, placeholderImage:
-                    placeholder) {
-                        result in
-                        if let cellToUpdate = self.tableView?.cellForRow(at: indexPath) {
-                            cellToUpdate.setNeedsLayout()
+                MainActor.assumeIsolated {
+                    // set cell.imageView to display image at gist.owner?.avatarURL
+                    let placeholder = UIImage(named: "placeholder")
+                    cell.imageView?.image = placeholder
+                    if let url = gist.owner?.avatarURL {
+                        cell.imageView?.pin_setImage(from: url, placeholderImage:
+                                                        placeholder) {
+                            result in
+                            if let cellToUpdate = self.tableView?.cellForRow(at: indexPath) {
+                                cellToUpdate.setNeedsLayout()
+                            }
                         }
                     }
-                } 
-                cell.setNeedsLayout()
+                    cell.setNeedsLayout()
+                }
             }
         }
 
@@ -377,19 +382,19 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
                     break
                 case let .failure(error):
                     print(error)
+                    MainActor.assumeIsolated {
+                        // Put it back
+                        self.gists.insert(gistToDelete, at: indexPath.row)
+                        tableView.insertRows(at: [indexPath], with: .right)
 
-                    // Put it back
-                    self.gists.insert(gistToDelete, at: indexPath.row)
-                    tableView.insertRows(at: [indexPath], with: .right)
+                        // Tell them it didn't work
+                        let alertController = UIAlertController(title: "Could not delete gist", message: "Sorry, your gist couldn't be deleted", preferredStyle: .alert)
+                        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alertController.addAction(okButton)
 
-                    // Tell them it didn't work
-                    let alertController = UIAlertController(title: "Could not delete gist", message: "Sorry, your gist couldn't be deleted", preferredStyle: .alert)
-                    let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertController.addAction(okButton)
-
-                    // show the alert
-                    self.present(alertController, animated: true, completion: nil)
-
+                        // show the alert
+                        self.present(alertController, animated: true, completion: nil)
+                    }
                 }
             }
         } else if editingStyle == .insert {
@@ -420,8 +425,9 @@ class MasterViewController: UITableViewController, SFSafariViewControllerDelegat
     }
 }
 
-extension MasterViewController: LoginViewDelegate {
+extension MasterViewController: @preconcurrency LoginViewDelegate {
 
+    @MainActor
     func didTapLoginButton() {
         self.dismiss(animated: false) {
             guard let authURL = GitHubAPIManager.shared.URLToStartOAuth2Login() else {

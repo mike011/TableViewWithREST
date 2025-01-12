@@ -11,7 +11,8 @@ import Foundation
 import Locksmith
 import UIKit
 
-class GitHubAPIManager {
+
+final class GitHubAPIManager: @unchecked Sendable {
     static let shared = GitHubAPIManager()
     var isLoadingOAuthToken = false
 
@@ -39,7 +40,7 @@ class GitHubAPIManager {
         }
     }
 
-    func imageFrom(url: URL, completionHandler: @escaping (UIImage?, Error?) -> Void) {
+    func imageFrom(url: URL, completionHandler: @Sendable @escaping (UIImage?, Error?) -> Void) {
         AF.request(url).responseData { response in
             guard let data = response.data else {
                 completionHandler(nil, response.error)
@@ -150,13 +151,22 @@ class GitHubAPIManager {
                            "client_secret": GitHubOAuthKeys.clientSecret,
                            "code": code]
         let jsonHeader = HTTPHeaders(["Accept": "application/json"])
-        AF.request(
+
+        let request = AF.request(
             getTokenPath,
             method: .post,
             parameters: tokenParams,
             encoding: URLEncoding.default,
             headers: jsonHeader)
-            .responseJSON { response in
+
+        request.responseDecodable(of: [String: String].self) { response in
+            guard response.error == nil else {
+                self.isLoadingOAuthToken = false
+                let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
+                let error = BackendError.authCouldNot(reason: errorMessage)
+                self.OAuthTokenCompletionHandler?(error)
+                return
+            }
 
             guard response.error == nil else {
                 self.isLoadingOAuthToken = false
@@ -165,20 +175,17 @@ class GitHubAPIManager {
                 self.OAuthTokenCompletionHandler?(error)
                 return
             }
-            guard let value = response.value else {
+            guard let jsonResult = response.value else {
                 self.isLoadingOAuthToken = false
                 let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                 let error = BackendError.authCouldNot(reason: errorMessage)
                 self.OAuthTokenCompletionHandler?(error)
                 return
             }
-            guard let jsonResult = value as? [String: String] else {
-                self.isLoadingOAuthToken = false
-                let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
-                let error = BackendError.authCouldNot(reason: errorMessage)
-                self.OAuthTokenCompletionHandler?(error)
-                return
-            }
+            self.isLoadingOAuthToken = false
+            let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
+            let error = BackendError.authCouldNot(reason: errorMessage)
+            self.OAuthTokenCompletionHandler?(error)
             print(jsonResult)
             // like {"access_token": "9999999", "token_type": "bearer", "scope": "gist"}
             self.OAuthToken = self.parseOAuthTokenResponse(jsonResult)
@@ -224,7 +231,7 @@ class GitHubAPIManager {
         return nil
     }
 
-    func isAPIOnline(completionHandler: @escaping (Bool) -> Void ) {
+    func isAPIOnline(completionHandler: @Sendable @escaping (Bool) -> Void ) {
         AF.request(GistRouter.baseURLString)
             .validate(statusCode: 200..<300)
             .responseData { response in

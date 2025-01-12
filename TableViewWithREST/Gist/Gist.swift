@@ -30,7 +30,7 @@ struct File: Codable {
     }
 }
 
-struct Gist: Codable {
+struct Gist: Codable, Sendable {
     
     var id: String?
     var gistDescription: String?

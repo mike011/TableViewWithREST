@@ -9,13 +9,13 @@
 import Alamofire
 import Foundation
 
-class DarkSkyAPIManager {
+final class DarkSkyAPIManager: @unchecked Sendable {
     static let shared = DarkSkyAPIManager()
 
     // MARK:
     func getForecast(location: String) {
         AF.request(DarkSkyRouter.forecast(location: location))
-            .responseJSON(completionHandler: { response in
+            .responseDecodable(of: String.self) { response in
                 switch response.result {
                 case .success(let data):
                     print("here")
@@ -23,6 +23,6 @@ class DarkSkyAPIManager {
                 case .failure(let failure):
                     print(failure)
                 }
-            })
+            }
     }
 }

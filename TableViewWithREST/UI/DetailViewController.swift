@@ -56,31 +56,33 @@ extension DetailViewController {
             return
         }
         GitHubAPIManager.shared.isGistStarred(withID: gistId) { result in
-            switch result {
-            case let .success(status):
-                if self.isStarred == nil {
-                    self.isStarred = status
-                    self.tableView.insertRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-                }
-            case let .failure(error):
-                switch error {
-                case BackendError.authLost:
-                    self.alertController = UIAlertController(
-                        title: "Auth Lost",
-                        message: error.localizedDescription,
-                        preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
-                    self.alertController.addAction(ok)
-                    self.present(self.alertController, animated: true, completion: nil)
-                case let BackendError.network(innerError as NSError):
-                    if innerError.domain != NSURLErrorDomain {
+            MainActor.assumeIsolated {
+                switch result {
+                case let .success(status):
+                    if self.isStarred == nil {
+                        self.isStarred = status
+                        self.tableView.insertRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                    }
+                case let .failure(error):
+                    switch error {
+                    case BackendError.authLost:
+                        self.alertController = UIAlertController(
+                            title: "Auth Lost",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+                        self.alertController.addAction(ok)
+                        self.present(self.alertController, animated: true, completion: nil)
+                    case let BackendError.network(innerError as NSError):
+                        if innerError.domain != NSURLErrorDomain {
+                            return
+                        }
+                        if innerError.code == NSURLErrorNotConnectedToInternet {
+                            self.showNotConnectedErrorBanner(title: "No internet", message: "Can't star")
+                        }
+                    default:
                         return
                     }
-                    if innerError.code == NSURLErrorNotConnectedToInternet {
-                        self.showNotConnectedErrorBanner(title: "No internet", message: "Can't star")
-                    }
-                default:
-                    return
                 }
             }
         }
@@ -88,7 +90,7 @@ extension DetailViewController {
 
     func showNotConnectedErrorBanner(title: String, message: String) {
         errorBanner = Banner(title: title, subtitle: message, image: nil, backgroundColor: .orange, didTapBlock: nil)
-        self.errorBanner?.dismissesOnSwipe
+        _ = self.errorBanner?.dismissesOnSwipe
         self.errorBanner?.show(nil, duration: nil)
     }
 
@@ -99,25 +101,29 @@ extension DetailViewController {
         GitHubAPIManager.shared.starGist(withID: gistID) { (result) in
             switch result {
             case .success:
-                self.isStarred = true
+                MainActor.assumeIsolated {
+                    self.isStarred = true
+                }
             case let .failure(error):
-                self.isStarred = nil
-                let errorMessage: String?
-                switch error {
-                case BackendError.authLost:
-                    errorMessage = error.localizedDescription
-                default:
-                    errorMessage = """
+                MainActor.assumeIsolated {
+                    self.isStarred = nil
+                    let errorMessage: String?
+                    switch error {
+                    case BackendError.authLost:
+                        errorMessage = error.localizedDescription
+                    default:
+                        errorMessage = """
                     Sorry, your gist couldn't be starred,
                     Maybe GitHub is down or you don't have an internet connection
                     """
-                    break
-                }
-                if let errorMessage = errorMessage {
-                    self.alertController = UIAlertController(title: "Could not star gist", message: errorMessage, preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
-                    self.alertController.addAction(ok)
-                    self.present(self.alertController, animated: true, completion: nil)
+                        break
+                    }
+                    if let errorMessage = errorMessage {
+                        self.alertController = UIAlertController(title: "Could not star gist", message: errorMessage, preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+                        self.alertController.addAction(ok)
+                        self.present(self.alertController, animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -131,25 +137,29 @@ extension DetailViewController {
         GitHubAPIManager.shared.unstarGist(withID: gistID) { (result) in
             switch result {
             case .success:
-                self.isStarred = false
+                MainActor.assumeIsolated {
+                    self.isStarred = false
+                }
             case let .failure(error):
-                self.isStarred = nil
-                let errorMessage: String?
-                switch error {
-                case BackendError.authLost:
-                    errorMessage = error.localizedDescription
-                default:
-                    errorMessage = """
+                MainActor.assumeIsolated {
+                    self.isStarred = nil
+                    let errorMessage: String?
+                    switch error {
+                    case BackendError.authLost:
+                        errorMessage = error.localizedDescription
+                    default:
+                        errorMessage = """
                     Sorry, your gist couldn't be unstarred,
                     Maybe GitHub is down or you don't have an internet connection
                     """
-                    break
-                }
-                if let errorMessage = errorMessage {
-                    self.alertController = UIAlertController(title: "Could not star gist", message: errorMessage, preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
-                    self.alertController.addAction(ok)
-                    self.present(self.alertController, animated: true, completion: nil)
+                        break
+                    }
+                    if let errorMessage = errorMessage {
+                        self.alertController = UIAlertController(title: "Could not star gist", message: errorMessage, preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "ok", style: .default, handler: nil)
+                        self.alertController.addAction(ok)
+                        self.present(self.alertController, animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -218,7 +228,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             starThisGist()
         case (1, _, _):
             guard let file = gist?.orderedFiles[indexPath.row],
-                let url = file.details.url else {
+                  let url = file.details.url else {
                 return
             }
 

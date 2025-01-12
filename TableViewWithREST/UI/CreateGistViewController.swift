@@ -92,12 +92,15 @@ class CreateGistViewController: XLFormViewController {
         GitHubAPIManager.shared.creaateGist(gist: gist) { (response) in
             switch response {
             case .success:
-                self.navigationController?.popViewController(animated: true)
+                print("Hu")
+				//self.navigationController?.popViewController(animated: true)
             case .failure:
-                let alertController = UIAlertController(title: "Couldn't create Gist", message: "helpful error message", preferredStyle: .alert)
-                let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alertController.addAction(okButton)
-                self.present(alertController, animated: true)
+                MainActor.assumeIsolated {
+                    let alertController = UIAlertController(title: "Couldn't create Gist", message: "helpful error message", preferredStyle: .alert)
+                    let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alertController.addAction(okButton)
+                    self.present(alertController, animated: true)
+                }
             }
         }
     }

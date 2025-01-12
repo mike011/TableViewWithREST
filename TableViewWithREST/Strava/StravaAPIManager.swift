@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 import Locksmith
 
-class StravaAPIManager {
+final class StravaAPIManager: @unchecked Sendable {
     static let shared = StravaAPIManager()
 
     // MARK: - Authentication
@@ -93,7 +93,7 @@ class StravaAPIManager {
             parameters: tokenParams,
             encoding: URLEncoding.default,
             headers: jsonHeader)
-            .responseJSON { response in
+        	.responseDecodable(of: [String: String].self) { response in
 
                 guard response.error == nil else {
                     self.isLoadingOAuthToken = false
@@ -102,14 +102,7 @@ class StravaAPIManager {
                     self.OAuthTokenCompletionHandler?(error)
                     return
                 }
-                guard let value = response.value else {
-                    self.isLoadingOAuthToken = false
-                    let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
-                    let error = BackendError.authCouldNot(reason: errorMessage)
-                    self.OAuthTokenCompletionHandler?(error)
-                    return
-                }
-                guard let jsonResult = value as? [String: Any] else {
+                guard let jsonResult = response.value else {
                     self.isLoadingOAuthToken = false
                     let errorMessage = response.error?.localizedDescription ?? "Could not obtain an OAuth token"
                     let error = BackendError.authCouldNot(reason: errorMessage)
@@ -140,12 +133,12 @@ class StravaAPIManager {
         return false
     }
 
-    func parseOAuthTokenResponse(_ json: [String: Any]) -> String? {
+    func parseOAuthTokenResponse(_ json: [String: String]) -> String? {
         var token: String?
         for (key, value) in json {
             switch key {
             case "access_token":
-                token = value as? String
+                token = value
             case "scope":
                 // TODO: verify scope
                 print("SET SCOPE")
@@ -163,7 +156,7 @@ class StravaAPIManager {
 
 extension StravaAPIManager {
 
-    func getActivities(completionHandler: @escaping (Result<[Exercise], Error>, String?) -> Void) {
+    func getActivities(completionHandler: @Sendable @escaping (Result<[Exercise], Error>, String?) -> Void) {
         AF.request(StravaRouter.activities).responseData { (response) in
             if let urlResponse = response.response,
                 let authError = self.checkUnauthorized(urlResponse: urlResponse) {

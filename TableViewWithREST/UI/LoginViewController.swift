@@ -8,6 +8,7 @@
 
 import UIKit
 
+@MainActor
 class LoginViewController: UIViewController {
 
     weak var delegate: LoginViewDelegate?

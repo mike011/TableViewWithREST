@@ -48,7 +48,7 @@ enum GistRouter: URLRequestConvertible {
 
         let url: URL = {
             switch self {
-            case let .create:
+            case .create:
                 return createURL(withPath: "gists")
             case let .delete(id):
                 return createURL(withPath: "gists/\(id)")
